@@ -73,6 +73,7 @@ class FreetCollection {
     const freet = await FreetModel.findOne({_id: freetId});
     freet.content = content;
     freet.dateModified = new Date();
+    freet.history += (content, new Date());
     await freet.save();
     return freet.populate('authorId');
   }
