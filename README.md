@@ -166,150 +166,286 @@ Mongoose allows you to use schema validation if you want to ensure that certain 
 ```
 
 within the schema. This tells us that the `content` field must have type `String`, and that it is required for documents in that collection. A freet must have a `String` type value for the `content` field to be added to the freets collection.
+ 
+  ## API routes
+ 
+ The following api routes have already been implemented for you (**Make sure to      document all the routes that you have added.**):
+ 
+ #### `GET /`
+ 
+ This renders the `index.html` file that will be used to interact with the backend
+ 
+ #### `GET /api/freets` - Get all the freets
+ 
+ **Returns**
+ 
+ - An array of all freets sorted in descending order by date modified
+ 
+ #### `GET /api/freets?author=USERNAME` - Get freets by author
+ 
+ **Returns**
+ 
+ - An array of freets created by user with username `author`
+ 
+ **Throws**
+ 
+ - `400` if `author` is not given
+ - `404` if `author` is not a recognized username of any user
+ 
+ 
+ #### `POST /api/freets` - Create a new freet
+ 
+ **Body**
+ 
+ - `content` _{string}_ - The content of the freet
+ 
+ **Returns**
+ 
+ - A success message
+ - A object with the created freet
+ 
+ **Throws**
+ 
+ - `403` if the user is not logged in
+ - `400` If the freet content is empty or a stream of empty spaces
+ 
+ 
+ 
+  #### `POST /api/thread` - Create a new freet thread object
+ 
+ **Body**
+ 
+ - `content` _{string}_ - The content of the freet thread
+ 
+ **Returns**
+ 
+ - A success message
+ - A object with a set of freet objects, each being maximum 140 characters
+ 
+ **Throws**
+ 
+ - `403` if the user is not logged in
+ - `400` If the freet content is empty or a stream of empty spaces
+ 
+ 
+ 
+ #### `DELETE /api/freets/:freetId?` - Delete an existing freet
+ 
+ **Returns**
+ 
+ - A success message
+ 
+ **Throws**
+ 
+ - `403` if the user is not logged in
+ - `403` if the user is not the author of the freet
+ - `404` if the freetId is invalid
+ 
+ #### `PUT /api/freets/:freetId?` - Edit an existing freet
+ 
+ **Body**
+ 
+ - `content` _{string}_ - The new content of the freet
+ 
+ **Returns**
+ 
+ - A success message
+ - An object with the updated freet, labeled as updated
+ 
+ **Throws**
+ 
+ - `403` if the user is not logged in
+ - `404` if the freetId is invalid
+ - `403` if the user is not the author of the freet
+ - `400` if the new freet content is empty or a stream of empty spaces
+ - `413` if the new freet content is more than 140 characters long
+ 
+ #### `GET /api/freets/:freetId?/history` - Get the edit history of an existing      freet
+ 
+ **Returns**
+ 
+ - A set of freet objects, with time stamps, in chronological order representing     the previous versions of the freet.
+ 
+ **Throws**
+ - `404` if the freetId is invalid
+ 
+ 
+  #### `POST /api/freets/freetId?/like` - Post a like to a given freet
+ 
+ **Returns**
+ - A success message
+ 
+ **Throws**
+  - `403` if the user is not logged in
+  - `404` if the freetId is invalid
+ 
+ 
+ #### `DELETE /api/freets/freetId?/like` - Remove  a like to a given freet
+ 
+ **Returns**
+ - A success message
+ 
+ **Throws**
+  - `403` if the user is not logged in
+  - `404` if the freetId is invalid
+ 
+ #### `GET /api/freets/:freetId?/likes` - Get the list of users that like an existing freet
+ 
+ **Returns**
+ 
+ - A set of users that liked the freet
+ 
+ **Throws**
+ - `404` if the freetId is invalid
+ 
+ 
+ #### `POST /api/users/session` - Sign in user
+ 
+ **Body**
+ 
+ - `username` _{string}_ - The user's username
+ - `password` _{string}_ - The user's password
+ 
+ **Returns**
+ 
+ - A success message
+ - An object with user's details (without password)
+ 
+ **Throws**
+ 
+ - `403` if the user is already logged in
+ - `400` if username or password is not in correct format format or missing in the   req
+ - `401` if the user login credentials are invalid
+ 
+  #### `DELETE /api/users/session` - Sign out user
+ 
+ **Returns**
+ 
+ - A success message
+ 
+ **Throws**
+ 
+ - `403` if user is not logged in
+ 
+ #### `POST /api/users` - Create an new user account
+ 
+ **Body**
+ 
+ - `username` _{string}_ - The user's username
+ - `password` _{string}_ - The user's password
+ 
+ **Returns**
+ 
+ - A success message
+ - An object with the created user's details (without password)
+ 
+ **Throws**
+ 
+ - `403` if there is a user already logged in
+ - `400` if username or password is in the wrong format
+ - `409` if username is already in use
+ 
+ #### `PUT /api/users` - Update a user's profile
+ 
+ **Body** _(no need to add fields that are not being changed)_
+ 
+ - `username` _{string}_ - The user's username
+ - `password` _{string}_ - The user's password
+ 
+ **Returns**
+ 
+ - A success message
+ - An object with the update user details (without password)
+ 
+ **Throws**
+ 
+ - `403` if the user is not logged in
+ - `400` if username or password is in the wrong format
+ - `409` if the username is already in use
+ 
+ #### `DELETE /api/users` - Delete user
+ 
+ **Returns**
+ 
+ - A success message
+ 
+ **Throws**
+ 
+ - `403` if the user is not logged in
+ 
+ #### `POST /api/user?name=USERNAME/follow` - Allows the user to follow another user.t
+ 
+ **Returns**
+ 
+ - A success message
+ - Updates set of users that this logged in user is following
+ - Updates set of followers for the user wtih username 'name'
+ 
+ **Throws**
+ 
+ - `403` if user is not logged in
+ - `404` if name is not a recognized username of any user
+ 
+ 
+ #### `GET /api/user?mame=USERNAME/followers` - Get followers for a userr
+ 
+ **Returns**
+ 
+ - An array of users that follow the user with username 'name'
+ 
+ **Throws**
+ 
+ - `400` if `name` is not given
+ - `404` if `name` is not a recognized username of any user
 
-## API routes
-
-The following api routes have already been implemented for you (**Make sure to document all the routes that you have added.**):
-
-#### `GET /`
-
-This renders the `index.html` file that will be used to interact with the backend
-
-#### `GET /api/freets` - Get all the freets
-
-**Returns**
-
-- An array of all freets sorted in descending order by date modified
-
-#### `GET /api/freets?author=USERNAME` - Get freets by author
-
-**Returns**
-
-- An array of freets created by user with username `author`
-
-**Throws**
-
-- `400` if `author` is not given
-- `404` if `author` is not a recognized username of any user
-
-#### `POST /api/freets` - Create a new freet
-
-**Body**
-
-- `content` _{string}_ - The content of the freet
-
-**Returns**
-
-- A success message
-- A object with the created freet
-
-**Throws**
-
-- `403` if the user is not logged in
-- `400` If the freet content is empty or a stream of empty spaces
-- `413` If the freet content is more than 140 characters long
-
-#### `DELETE /api/freets/:freetId?` - Delete an existing freet
-
-**Returns**
-
-- A success message
-
-**Throws**
-
-- `403` if the user is not logged in
-- `403` if the user is not the author of the freet
-- `404` if the freetId is invalid
-
-#### `PUT /api/freets/:freetId?` - Update an existing freet
-
-**Body**
-
-- `content` _{string}_ - The new content of the freet
-
-**Returns**
-
-- A success message
-- An object with the updated freet
-
-**Throws**
-
-- `403` if the user is not logged in
-- `404` if the freetId is invalid
-- `403` if the user is not the author of the freet
-- `400` if the new freet content is empty or a stream of empty spaces
-- `413` if the new freet content is more than 140 characters long
-
-#### `POST /api/users/session` - Sign in user
-
-**Body**
-
-- `username` _{string}_ - The user's username
-- `password` _{string}_ - The user's password
-
-**Returns**
-
-- A success message
-- An object with user's details (without password)
-
-**Throws**
-
-- `403` if the user is already logged in
-- `400` if username or password is not in correct format format or missing in the req
-- `401` if the user login credentials are invalid
-
-#### `DELETE /api/users/session` - Sign out user
-
-**Returns**
-
-- A success message
-
-**Throws**
-
-- `403` if user is not logged in
-
-#### `POST /api/users` - Create an new user account
-
-**Body**
-
-- `username` _{string}_ - The user's username
-- `password` _{string}_ - The user's password
-
-**Returns**
-
-- A success message
-- An object with the created user's details (without password)
-
-**Throws**
-
-- `403` if there is a user already logged in
-- `400` if username or password is in the wrong format
-- `409` if username is already in use
-
-#### `PUT /api/users` - Update a user's profile
-
-**Body** _(no need to add fields that are not being changed)_
-
-- `username` _{string}_ - The user's username
-- `password` _{string}_ - The user's password
-
-**Returns**
-
-- A success message
-- An object with the update user details (without password)
-
-**Throws**
-
-- `403` if the user is not logged in
-- `400` if username or password is in the wrong format
-- `409` if the username is already in use
-
-#### `DELETE /api/users` - Delete user
-
-**Returns**
-
-- A success message
-
-**Throws**
-
-- `403` if the user is not logged in
+#### `GET /api/user?mame=USERNAME/following` - Get user's that user is following.
+ 
+ **Returns**
+ 
+ - An array of users that the user is following.
+ 
+ **Throws**
+ 
+ - `400` if `name` is not given
+ - `404` if `name` is not a recognized username of any user
+ 
+ 
+ #### `GET /api/timeline` - Get the current user's timeline.
+ 
+ **Returns**
+ 
+ - An array of all freets made wtihin the past 7 days by users in the user's         following list.
+ 
+ **Throws**
+ 
+ - `403` if user is not logged in.
+ 
+ 
+ #### `POST /api/community` - Create a new community space
+ 
+ **Body**
+ 
+ - `name'` _{string}_ - The name of the community space
+ 
+ **Returns**
+ 
+ - A success message
+ - A object with community space
+ 
+ **Throws**
+ 
+ - `403` if the user is not logged in
+ - `400` If the commumity name  is empty or a stream of empty spaces
+ - `413` If the community name is more than 90  characters long
+ 
+ #### `DELETE /api/community/:communityId?` - Delete an existing community space
+ 
+ **Returns**
+ 
+ - A success message
+ 
+ **Throws**
+ 
+ - `403` if the user is not logged in
+ - `403` if the user is not the creator of the space
+ - `404` if the communityId is invalid
