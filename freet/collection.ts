@@ -25,7 +25,8 @@ class FreetCollection {
       authorId,
       dateCreated: date,
       content,
-      dateModified: date
+      dateModified: date,
+      history
     });
     await freet.save(); // Saves freet to MongoDB
     return freet.populate('authorId');
@@ -63,7 +64,7 @@ class FreetCollection {
   }
 
   /**
-   * Update a freet with the new content
+   * Edit a freet with the new content
    *
    * @param {string} freetId - The id of the freet to be updated
    * @param {string} content - The new content of the freet
@@ -73,7 +74,7 @@ class FreetCollection {
     const freet = await FreetModel.findOne({_id: freetId});
     freet.content = content;
     freet.dateModified = new Date();
-    freet.history += (content, new Date());
+    freet.edithistory.push(content);
     await freet.save();
     return freet.populate('authorId');
   }

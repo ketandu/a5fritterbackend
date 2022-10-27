@@ -12,16 +12,18 @@ export type Freet = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   authorId: Types.ObjectId;
   dateCreated: Date;
-  content: string;
+  content: String;
   dateModified: Date;
+  edithistory: Array<string>;
 };
 
 export type PopulatedFreet = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   authorId: User;
   dateCreated: Date;
-  content: string;
+  content: String;
   dateModified: Date;
+  edithistory: Array<string>;
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -48,6 +50,11 @@ const FreetSchema = new Schema<Freet>({
   // The date the freet was modified
   dateModified: {
     type: Date,
+    required: true
+  },
+  edithistory: {
+  // This is the history of edits on the freet
+    type: Array<string[]>(),
     required: true
   }
 });
