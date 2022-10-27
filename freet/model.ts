@@ -49,11 +49,6 @@ const FreetSchema = new Schema<Freet>({
   dateModified: {
     type: Date,
     required: true
-  },
-  // The history of all previous versions of the freet.
-  history: {
-     type: Array,
-     required: true
   }
 });
 
