@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
   <script src="/scripts/freet.js"></script>
   <script src="/scripts/user.js"></script>
+  <script src="/scripts/community.js"></script>
+  <script src="/scripts/upvote.js"></script>
   <script src="/scripts/index.js"></script>
 </head>
 
@@ -117,6 +119,65 @@
           </div>
           <input type="submit" value="Delete Freet">
         </form>
+
+        <form id="create-community">
+          <h3>Create Community</h3>
+          <div>
+            <label for="spacename">Spacename:</label>
+            <input id="spacename" name="spacename"></textarea>
+          </div>
+          <input type="submit" value="Create Community">
+        </form>
+
+        <form id="delete-community">
+          <h3>Delete Community</h3>
+          <div>
+            <label for="commId">Community ID:</label>
+            <input id="commId" name="commId"></textarea>
+          </div>
+          <input type="submit" value="Delete Community">
+        </form>
+
+        <form id="add-community-content">
+          <h3>Add Community Content</h3>
+          <div>
+            <label for="commId">Community ID:</label>
+            <input id="commId" name="commId"></textarea>
+          </div>
+          <div>
+            <label for="freetId">Freet ID:</label>
+            <input id="freetId" name="freetId"></textarea>
+          </div>
+          <input type="submit" value="Add Community Content">
+        </form>
+
+        <form id="find-community-content">
+          <h3>Find Community Content</h3>
+          <div>
+            <label for="commId">Community ID:</label>
+            <input id="commId" name="commId"></textarea>
+          </div>
+          <input type="submit" value="Find Community Content">
+        </form>
+
+        <form id="add-upvote">
+          <h3>Upvote Freet</h3>
+          <div>
+            <label for="freetId">Freet ID:</label>
+            <input id="freetId" name="freetId"></textarea>
+          </div>
+          <input type="submit" value="Upvote Freet">
+        </form>
+
+        <form id="delete-upvote">
+          <h3>Remove Upvote</h3>
+          <div>
+            <label for="freetId">Freet ID:</label>
+            <input id="freetId" name="freetId"></textarea>
+          </div>
+          <input type="submit" value="Remove Upvote">
+        </form>
+
       </div>
     </section>
     <section>

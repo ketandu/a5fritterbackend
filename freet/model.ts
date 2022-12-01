@@ -12,7 +12,7 @@ export type Freet = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   authorId: Types.ObjectId;
   dateCreated: Date;
-  content: String;
+  content: string;
   dateModified: Date;
   edithistory: Array<string>;
 };
@@ -21,7 +21,7 @@ export type PopulatedFreet = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   authorId: User;
   dateCreated: Date;
-  content: String;
+  content: string;
   dateModified: Date;
   edithistory: Array<string>;
 };

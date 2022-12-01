@@ -21,12 +21,13 @@ class FreetCollection {
    */
   static async addOne(authorId: Types.ObjectId | string, content: string): Promise<HydratedDocument<Freet>> {
     const date = new Date();
+    const edithistory: string[] = [];
     const freet = new FreetModel({
       authorId,
       dateCreated: date,
       content,
       dateModified: date,
-      history
+      edithistory
     });
     await freet.save(); // Saves freet to MongoDB
     return freet.populate('authorId');
@@ -72,9 +73,10 @@ class FreetCollection {
    */
   static async updateOne(freetId: Types.ObjectId | string, content: string): Promise<HydratedDocument<Freet>> {
     const freet = await FreetModel.findOne({_id: freetId});
+    const old_content = freet.content;
     freet.content = content;
     freet.dateModified = new Date();
-    freet.edithistory.push(content);
+    freet.edithistory.push(old_content.toString());
     await freet.save();
     return freet.populate('authorId');
   }

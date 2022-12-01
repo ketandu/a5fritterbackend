@@ -10,6 +10,7 @@ function showObject(obj) {
 }
 
 function showResponse(response) {
+  console.log(response)
   response.json().then(data => {
     showObject({
       data,
@@ -38,7 +39,13 @@ const formsAndHandlers = {
   'view-freets-by-author': viewFreetsByAuthor,
   'create-freet': createFreet,
   'edit-freet': editFreet,
-  'delete-freet': deleteFreet
+  'delete-freet': deleteFreet,
+  'create-community': createCommunity,
+  'delete-community': deleteCommunity,
+  'add-community-content': addCommunityContent,
+  'find-community-content': findCommunityContent,
+  'add-upvote': addUpvote,
+  'delete-upvote': deleteUpvote
 };
 
 // Attach handlers to forms
